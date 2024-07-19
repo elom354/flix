@@ -9,18 +9,29 @@
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
         margin: 0;
+        text-align: center;
+    }
+    .container {
+        max-width: 80%;
+    }
+    .header img {
+        max-width: 100%;
+        height: auto;
+        max-height: 200px; /* Limite la hauteur de l'image */
+        border-radius: 10px;
+        object-fit: cover; /* Garde le ratio d'aspect */
     }
     .message {
-        text-align: center;
         background-color: #fff;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 80%;
+        margin-bottom: 20px;
     }
     h1 {
         font-size: 24px;
@@ -30,12 +41,50 @@
         font-size: 18px;
         color: #666;
     }
+    .countdown {
+        font-size: 24px;
+        color: #333;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+    }
 </style>
 </head>
 <body>
-    <div class="message">
-        <h1>Bienvenue sur notre plateforme!</h1>
-        <p>Vous pourrez commencer par voir vos meilleurs films, séries et mangas à partir du 31 août.</p>
+    <div class="container">
+        <div class="header">
+            <img src="t.jpg" alt="Image de la plateforme" id="platform-image">
+        </div>
+        <div class="message">
+            <h1>Bienvenue sur notre plateforme!</h1>
+            <p>Vous pourrez commencer par voir vos meilleurs films, séries et mangas à partir du 31 août.</p>
+        </div>
+        <div class="countdown" id="countdown"></div>
     </div>
+
+    <script>
+        function updateCountdown() {
+            const launchDate = new Date('2024-08-31T00:00:00'); // La date et heure de lancement
+            const now = new Date();
+            const timeDiff = launchDate - now;
+
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            const countdownElement = document.getElementById('countdown');
+            if (timeDiff > 0) {
+                countdownElement.textContent = `${days} jour${days > 1 ? 's' : ''}, ${hours} heure${hours > 1 ? 's' : ''}, ${minutes} minute${minutes > 1 ? 's' : ''} et ${seconds} seconde${seconds > 1 ? 's' : ''} restantes avant le lancement!`;
+            } else {
+                countdownElement.textContent = "La plateforme est maintenant disponible!";
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000); // Met à jour le compteur chaque seconde
+    </script>
 </body>
 </html>
